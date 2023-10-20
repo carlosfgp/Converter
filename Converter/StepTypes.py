@@ -24,4 +24,4 @@ class StepTypes():
 
 
     def File_drop(self,elements):
-          = configInfo.getElementsFromSecction(oldKeyCell)
+         files = configInfo.getElementsFromSecction(oldKeyCell)
