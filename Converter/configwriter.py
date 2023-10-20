@@ -1,29 +1,66 @@
-from configparser import  ConfigParser
+from configparser import ConfigParser
+
 from Converter import Converter
 
 config = ConfigParser()
+config.optionxform=str
 
-config["DEFAULT"] = {
-    "HEADER" : ["Feature","Step","Param 0"],
-    "ActionType" : "Feature",
-    "Paraml" : "Step",
-    "Param2" : "Param 0 Value",
-    "Param3" : "Param 1 Value",
-    "Paran4" : "Param 2 Value",
-    "Param5" : "Param 3 Value",
-    "Paran6" : "Param 4 Value",
-    "Paran7" : "Param 5 Value",
-    "Paran8" : "Param 6 Value",
-    "Paran9" : "Param 7 Value",
-    "Paran10" : "Param 8 Value",
-    "FolderDrop" : ["S_FEATURE","Drop ULDD","FileDirPath","PATH","S_REQUEST_TYPE"],
-    "FileDrop" : ["S_FEATURE","Drop ULDD","FilePath:PATH","PATH","S_REQUEST_TYPE"],
-    "LTE" : ["S_FEATURE","PublishLTE","EventName","S_LTE"],
-    "LTERange" : ["S_FEATURE","Roll Dates","StartDate","EndDate"],
-    "RunsQL" : ["S_FEATURE","Execute SQL Script","Script","PATH","S_MODULE:MODULE"],
-    "564654" : ["FMCC"],
-    "354684" : ["FNMA"]
+config["HEADER"] = {
+    "column0": "Feature",
+    "column1": "Step",
+    "column2": "Param 0 Value",
+    "column3": "Param 1 Value",
+    "column4": "Param 1 Value",
+    "column5": "Param 1 Value",
+    "column6": "Param 1 Value",
+    "column7": "Param 1 Value",
+}
+
+config["FolderDrop"] = {
+    "column0": "S_FEATURE",
+    "column1": "FileDirPath",
+    "column2": "PATH",
+    "column3": "S_REQUEST_TYPE",
+}
+config["FileDrop"] = {
+    "column0": "S_FEATURE",
+    "column1": "Drop ULDD",
+    "column2": "FilePath",
+    "column3": "PATH",
+    "column4": "S_REQUEST_TYPE",
+}
+
+config["LTE"] = {
+    "column0": "S_FEATURE",
+    "column1": "PublishLTE",
+    "column2": "EventName",
+    "column3": "PATH",
+    "column4": "S_LTE"
+}
+
+config["LTERange"] = {
+    "column0": "S_FEATURE",
+    "column1": "Roll Dates",
+    "column2": "StartDate",
+    "column3": "EndDate"
+}
+
+config["RunsQL"] = {
+    "column0": "S_FEATURE",
+    "column1": "Execute SQL Script",
+    "column2": "Script",
+    "column3": "PATH",
+    "column4": "S_MODULE"
+}
+
+config["Issuer"] = {
+    "564654": "FMCC",
+    "354684": "FNMA"
 }
 
 with open(Converter.CONFIG_LOCATION_AND_NAME, "w") as f:
     config.write(f)
+
+reading = config.read(Converter.CONFIG_LOCATION_AND_NAME)
+print(config.items('HEADER'))
+

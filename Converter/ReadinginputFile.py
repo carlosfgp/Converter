@@ -1,67 +1,64 @@
-import logging
-from Converter import  Converter
-from Logger import Logger
-import os
-import sys
-from icecream import ic
-from  xlsxwriter.workbook import Workbook
-from Transformer import Transformer
 import csv
-import shutil
+import logging
+import os
+
+from Converter import Converter
+from Transformer import Transformer
+from WriteNewXlsx import WriteNewXlsx
+from xlsxwriter.workbook import Workbook
 
 
+class input(Converter):
 
-
-
-class input():
-
-    def __init__(self,inputFile,runbookName='Default'):
+    def __init__(self, inputFile, runbookName="Default"):
         self.__inputFile = inputFile
-        self.__log = Logger.logger(__name__,debugLevel=logging.DEBUG)
+        self.__log__ = Converter.logger(__name__, debugLevel=logging.INFO)
+        self.__runbookName__ = runbookName
         new_Stram_Handler = logging.StreamHandler()
-        self.__log.addHandler(new_Stram_Handler)
-        self.__runbookName = runbookName
-
-        ic.enable()
+        self.__log__.addHandler(new_Stram_Handler)
         if (os.path.isfile(inputFile) & (inputFile).endswith(".csv")):
-            message = "Transforming Tosca {} Runbook into CI".format(inputFile)
-            ic(message)
-            self.__log.info(message)
+            message = f"Transforming Tosca *{inputFile}* Runbook into CI."
+            self.__log__.info(message)
         else:
-            raise FileNotFoundError("Error while reading {}".format(inputFile))
+            raise FileNotFoundError(f"Error while reading input file: *{inputFile}*")
 
 
-
+    #Reads csv file and writes new xlsx at the same time
     def _readInput(self):
-        if self.__runbookName == 'Default':
+        compute = Transformer()
+        linesWrote = 0  # Row counter for new file
+        moveFiles = WriteNewXlsx()
+
+        if self.__runbookName__ == 'Default':
             fileName = os.path.join(Converter.TEMP_XLSX_PATH, Converter.TEMP_XLSX_FILE)
-            workbook = Workbook(str(fileName), {'strings_to_numbers': True})
+            workbook = Workbook(str(fileName), {"strings_to_numbers": True})
         else:
-            fileName = os.path.join(Converter.TEMP_XLSX_PATH,self.__runbookName)
-            workbook = Workbook(str(fileName), {'strings_to_numbers': True})
+            fileName = os.path.join(Converter.TEMP_XLSX_PATH, self.__runbookName__)
+            workbook = Workbook(str(fileName), {"strings_to_numbers": True})
 
         worksheet = workbook.add_worksheet()
 
         try:
-            with open(self.__inputFile, 'rt', encoding='utf8') as f:
+            with open(self.__inputFile, "rt", encoding="utf8") as f:
                 reader = csv.reader(f)
-                for r, row in enumerate(reader):
-                    self.__log.debug("R - {}  ROW - {}".format(r, row))
-                    new_list = [r,row]
-                    compute = Transformer(r,row)
-                    compute.compute()
-                    #worksheet.write(r,c,column)
-            #workbook.close()
-            ic(fileName)
-            self._moveFilesAround(fileName)
-        except TypeError as e:
-            #workbook.close()
-            self.__log.warning("Error while reading input file {e}".format(e))
+                # Number of destiny row might not be the same as the origin, tracking it using linsWrote
+                for walkingRowNumber, dataInRow in enumerate(reader):
+                    self.__log__.debug(f"Origin - R - {walkingRowNumber}  ROW - {dataInRow}")
+                    self.__log__.debug(f"Destiny - R - {linesWrote}  ROW - {dataInRow}")
 
+                    newRowValuesLst = compute.compute(linesWrote, dataInRow)
+                    if False == newRowValuesLst:
+                        # Empty value is already handled on compute() method
+                        continue
+                    else:
+                        self.__log__.debug(f"Origin - R - {walkingRowNumber}  ROW - {dataInRow}")
+                        self.__log__.debug(f"Destiny - R - {linesWrote}  ROW - {newRowValuesLst}")
 
-    def _moveFilesAround(self,actualFile):
-
-        dstnFile = os.path.join(Converter.CI_RUNBOOKS_PATH, os.path.basename(actualFile).replace(".xlsx",Converter.FILE_SUFIX) )
-        if os.path.isfile(actualFile):
-            shutil.copy(actualFile,dstnFile)
-            self.__log.info("File created {}".format(dstnFile))
+                        for colNoNewFile, element in enumerate(newRowValuesLst):
+                            worksheet.write(linesWrote, colNoNewFile, element)
+                            self.__log__.debug(f"Row number: {linesWrote} Column: {colNoNewFile} CELL - {element}")
+                        linesWrote += 1
+            workbook.close()
+            moveFiles.moveFilesAround(fileName)
+        except TypeError as exc:
+            self.__log__.warning(f"Error while reading input file {exc}", exc_info=True)

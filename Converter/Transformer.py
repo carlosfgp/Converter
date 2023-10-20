@@ -1,30 +1,28 @@
-from Logger import  Logger
-from configparser import ConfigParser
-from Converter import  Converter
-from icecream import ic
+import logging
+from Converter import Converter
+import logging
 
+from Converter import Converter
 
 
 class Transformer():
-    def __init__(self,n_row,row):
-        ic.enable()
-        self.__n_row__ = n_row
-        self.__row__ = row
+    def __init__(self):
+        self.__log__ = Converter.logger(__name__, debugLevel=logging.INFO)
+        newStreamHandler = logging.StreamHandler()
+        self.__log__.addHandler(newStreamHandler)
 
-    def compute(self):
-        config = ConfigParser()
-        config.read(Converter.CONFIG_LOCATION_AND_NAME)
-        config_data = config["DEFAULT"]
+    def compute(self, n_row, row):
+        configInfo = Converter()
+        dataFromConfigFile = Converter()
+        oldKeyCell = str(row[0])
 
-        ic(str(self.__row__[0]).lower())
-        oldCell = str(self.__row__[0]).lower()
-        if oldCell in config_data.keys():
-            newCell = config_data[oldCell]
-            ic(newCell)
-
-
-
-
-
-
-
+        if oldKeyCell in Converter.POSSIBLE_HEADERS:
+            self.__log__.info("Extracting Headers from config file")
+            return dataFromConfigFile.getElementsFromSecction(Converter.HEADER)
+        elif configInfo.secctionExist(oldKeyCell):
+            return
+        else:
+            self.__log__.debug(f"Skipping like... Key: *{oldKeyCell}* not found on config file: *{Converter.CONFIG_LOCATION_AND_NAME}*")
+            return False
+        self.__log__.info(f"Not sure what to do for this key: *{oldKeyCell}*")
+        return False
