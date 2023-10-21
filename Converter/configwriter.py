@@ -3,7 +3,7 @@ from configparser import ConfigParser
 from Converter import Converter
 
 config = ConfigParser()
-config.optionxform=str
+config.optionxform = str
 
 config["HEADER"] = {
     "column0": "Feature",
@@ -63,4 +63,3 @@ with open(Converter.CONFIG_LOCATION_AND_NAME, "w") as f:
 
 reading = config.read(Converter.CONFIG_LOCATION_AND_NAME)
 print(config.items('HEADER'))
-

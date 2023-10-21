@@ -22,8 +22,7 @@ class input(Converter):
         else:
             raise FileNotFoundError(f"Error while reading input file: *{inputFile}*")
 
-
-    #Reads csv file and writes new xlsx at the same time
+    # Reads csv file and writes new xlsx at the same time
     def _readInput(self):
         compute = Transformer()
         linesWrote = 0  # Row counter for new file
@@ -33,7 +32,7 @@ class input(Converter):
             fileName = os.path.join(Converter.TEMP_XLSX_PATH, Converter.TEMP_XLSX_FILE)
             workbook = Workbook(str(fileName), {"strings_to_numbers": True})
         else:
-            fileName = os.path.join(Converter.TEMP_XLSX_PATH, self.__runbookName__)
+            fileName = os.path.join(Converter.TEMP_SX_PATH, self.__runbookName__)
             workbook = Workbook(str(fileName), {"strings_to_numbers": True})
 
         worksheet = workbook.add_worksheet()
