@@ -1,3 +1,4 @@
 **/ToscaToCIMapping.ini
-**/Logs/Converter.log
-**/tmp/Runbook1.xlsx
+**Logs/
+**tmp/
+**config/

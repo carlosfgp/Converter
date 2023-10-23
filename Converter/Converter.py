@@ -4,25 +4,26 @@ from configparser import ConfigParser
 
 
 class Converter():
+    ULDD_PATH_REQUEST_ID_PATH ="./catalog/catalognaNo"
     CI_RUNBOOKS_PATH = r"C:\Users\carlo\Runbooks"
-    CI_LOGS_FILEPATH = r"C:\Users\carlo\projects\Python\Converter\Converter\Logs\Converter.log"
+    CI_LOGS_FILEPATH = r"C:\Users\carlo\projects\Python\Converter\Converter\Logs\converter.log"
     CI_TEST_DATA = r"C:\Users\carlo\TEST_DATA"
     TEMP_XLSX_PATH = r"C:\Users\carlo\projects\Python\Converter\Converter\tmp"
     TEMP_XLSX_FILE = r"temp.xlsx"
     FILE_SUFIX = "_CI.xlsx"
     CONFIG_LOCATION_AND_NAME = "config/ToscaToCIMapping.ini"
+    RQ_IF = "config/RW_IF.ini"
     POSSIBLE_HEADERS = ["ActionType"]
     HEADER = 'HEADER'
     CREATE_CONFIG = False
 
     def __init__(self):
-        self.__config__ = ConfigParser()
-        self.__configRead__ = self.__config__.read(Converter.CONFIG_LOCATION_AND_NAME)
+        self.__config__ = Converter()
+        self.__config__.read(Converter.CONFIG_LOCATION_AND_NAME)
         self.__configSections__ = self.__config__.sections()
         self.__log__ = Converter.logger(__name__, debugLevel=logging.DEBUG)
-
-    def getConfig(self):
-        return self.__config__
+        self.__interfaceConfigData__ = ConfigParser()
+        self.__interfaceConfigData__.read(Converter.RQ_IF)
 
     def secctionExist(self, stepType):
         if stepType in self.getSecctions():

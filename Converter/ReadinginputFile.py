@@ -2,6 +2,7 @@ import csv
 import logging
 import os
 
+import xlsxwriter.exceptions
 from Converter import Converter
 from Transformer import Transformer
 from WriteNewXlsx import WriteNewXlsx
@@ -32,7 +33,7 @@ class input(Converter):
             fileName = os.path.join(Converter.TEMP_XLSX_PATH, Converter.TEMP_XLSX_FILE)
             workbook = Workbook(str(fileName), {"strings_to_numbers": True})
         else:
-            fileName = os.path.join(Converter.TEMP_SX_PATH, self.__runbookName__)
+            fileName = os.path.join(Converter.TEMP_XLSX_PATH, self.__runbookName__)
             workbook = Workbook(str(fileName), {"strings_to_numbers": True})
 
         worksheet = workbook.add_worksheet()
@@ -61,3 +62,5 @@ class input(Converter):
             moveFiles.moveFilesAround(fileName)
         except TypeError as exc:
             self.__log__.warning(f"Error while reading input file {exc}", exc_info=True)
+        except xlsxwriter.exceptions.FileCreateError as exc:
+            self.__log__.critical(f"File is open {exc}")
