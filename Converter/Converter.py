@@ -18,7 +18,7 @@ class Converter():
     CREATE_CONFIG = False
 
     def __init__(self):
-        self.__config__ = Converter()
+        self.__config__ = ConfigParser()
         self.__config__.read(Converter.CONFIG_LOCATION_AND_NAME)
         self.__configSections__ = self.__config__.sections()
         self.__log__ = Converter.logger(__name__, debugLevel=logging.DEBUG)
