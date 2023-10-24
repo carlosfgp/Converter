@@ -11,7 +11,7 @@ from xlsxwriter.workbook import Workbook
 
 class input(Converter):
 
-    def __init__(self, inputFile, runbookName="Default"):
+    def __init__(self, inputFile, runbookName):
         self.__inputFile = inputFile
         self.__log__ = Converter.logger(__name__, debugLevel=logging.INFO)
         self.__runbookName__ = runbookName

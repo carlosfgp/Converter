@@ -38,6 +38,7 @@ class StepTypes():
         valuesFromXml = fileinfo.readXml(n_row, oldRowData[3])
         if False != valuesFromXml:
             newRowValues = []
+
             interfaceNo = self.getInterfaceValue(valuesFromXml[NEW_REQUEST_TYP])
 
             # Feature
