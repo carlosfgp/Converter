@@ -7,11 +7,11 @@ from Converter import Converter
 
 class WriteNewXlsx:
 
-    def __init__(self, runbookName='Default'):
+    def __init__(self):
         self.__log__ = Converter.logger(__name__, debugLevel=logging.INFO)
 
     def moveFilesAround(self, actualFile):
-        dstnFile = os.path.join(Converter.CI_RUNBOOKS_PATH,
+        dstnFile = os.path.join(Converter.CI_RUNBOOK_DESTINATION_PATH,
                                 os.path.basename(actualFile).replace(".xlsx", Converter.FILE_SUFIX))
         if os.path.isfile(actualFile):
             shutil.copy(actualFile, dstnFile)

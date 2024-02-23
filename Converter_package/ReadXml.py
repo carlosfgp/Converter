@@ -1,5 +1,6 @@
 import logging
 import os
+import traceback
 from configparser import ConfigParser
 import xml.etree.ElementTree as ET
 
@@ -41,10 +42,10 @@ class ReadXml:
                 #value =  tree.find(Converter.ULDD_PATH_REQUEST_ID_PATH)
                 #print(value)
             except AttributeError as exc:
-                raise AttributeError(f'Error while getting data from input file {inputFile} in row {row}, either the data needs to be reviewed or the paths to the elemtns needs to be updated.')
+                raise AttributeError(f"Error while getting data from input file {inputFile} in row {row}, either the data needs to be reviewed or the paths to the elemtns needs to be updated.")
 
         else:
-            self.__log__.critical(f'Error on row {row} file doesn\'t exist: {inputFile}')
+            self.__log__.critical(f"Error on row {row} file doesn\'t exist: {inputFile}.")
         return  False
         # if self.__mapinggDic__ = interfaceNo:
         #     pass

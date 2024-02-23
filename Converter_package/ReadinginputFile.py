@@ -1,6 +1,7 @@
 import csv
 import logging
 import os
+import traceback
 
 import xlsxwriter.exceptions
 from Converter import Converter
@@ -63,4 +64,5 @@ class input(Converter):
         except TypeError as exc:
             self.__log__.warning(f"Error while reading input file {exc}", exc_info=True)
         except xlsxwriter.exceptions.FileCreateError as exc:
-            self.__log__.critical(f"File is open {exc}")
+            self.__log__.critical(f"Error:{traceback.print_exc()}")
+

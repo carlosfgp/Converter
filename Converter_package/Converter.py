@@ -1,21 +1,22 @@
 import logging
+import os
 
 from configparser import ConfigParser
 
 
 class Converter():
-    
-    ULDD_PATH_REQUEST_ID_PATH ="./catalog/catalognaNo"
-    CI_RUNBOOKS_PATH = r"C:\Users\carlo\Runbooks"
-    CI_LOGS_FILEPATH = r"C:\Users\carlo\projects\Python\Converter\Converter\Logs\converter.log"
-    CI_TEST_DATA = r"C:\Users\carlo\TEST_DATA"
-    TEMP_XLSX_PATH = r"C:\Users\carlo\projects\Python\Converter\Converter\tmp"
-    TEMP_XLSX_FILE = r"temp.xlsx"
-    ROOT_CI_DATA_FOLDER = r"C:\Users\carlo\TEST_DATA"
+    parent_directory = os.path.dirname(__file__)
+    home_directory = os.path.expanduser("~")
+    ULDD_PATH_REQUEST_ID_PATH = "./catalog/catalognaNo"
+    CI_RUNBOOK_DESTINATION_PATH = os.path.join(home_directory,"Runbooks")
+    CI_LOGS_FILEPATH = os.path.join(parent_directory, "logs/converter.log")
+    CI_TEST_DATA = os.path.join(parent_directory, "TEST_DATA")
+    TEMP_XLSX_PATH = os.path.join(parent_directory, "tmp")
+    TEMP_XLSX_FILE = "temp.xlsx"
     FILE_SUFIX = "_CI.xlsx"
     CONFIG_LOCATION_AND_NAME = "config/ToscaToCIMapping.ini"
     RQ_IF = "config/RW_IF.ini"
-    POSSIBLE_HEADERS = ["ActionType","__PosibleHeaders_Here"]
+    POSSIBLE_HEADERS = ["ActionType", "__PosibleHeaders_Here"]
     HEADER = "HEADER"
     CREATE_CONFIG = False
 
@@ -50,12 +51,22 @@ class Converter():
         return self.__configSections__
 
     def logger(moduleName, fileName=CI_LOGS_FILEPATH, formatter="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
-               debugLevel=logging.INFO):
+               debugLevel=logging.DEBUG):
         log = logging.getLogger(moduleName)
-
         log.setLevel(debugLevel)
         formatter = logging.Formatter(formatter)
+
+        #Console log handler
+        console_handler = logging.StreamHandler()
+        console_handler.setFormatter(formatter)
+        console_handler.setFormatter(formatter)
+        console_handler.setLevel(debugLevel)
+
+        #converter.log handler
         file_handler = logging.FileHandler(fileName)
+        file_handler.setLevel(debugLevel)
         file_handler.setFormatter(formatter)
+
         log.addHandler(file_handler)
+        log.addHandler(console_handler)
         return log
