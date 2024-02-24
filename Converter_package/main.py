@@ -4,17 +4,18 @@ import logging
 import os
 import sys
 
+import setupConverter
 from Converter import Converter
-from ReadinginputFile import input
+from ReadinginputFile import Input
 
 
 def main():
     """
     Main use is to convert csv files into xlsx with custom output base on mapping source -> dictionary - >destiny
     Note:Step 1 and 2 are only need to be run first time or when there is updates to the configuration files.
-        1.- Set up the needed directories using setupConverter.py.
-        2.- Create the needed configuration files using requestName_interfaceNumber_config_creator.py
-        3.-Make sure to call the main program with at least the input.csv file
+        1. Set up the needed directories using setupConverter.py.
+        2. Create the needed configuration files using requestName_interfaceNumber_config_creator.py
+        3. Make sure to call the main program with at least the input.csv file
     """
 
     log = Converter.logger(__name__)
@@ -43,7 +44,7 @@ def main():
             output_xlsx_file_name = args.output_xlsx_file_name
             is_data_being_copied_over_ci = args.is_data_being_copied_over_ci
             print(str(sys.argv))
-            a = input(path_to_input_runbook, output_xlsx_file_name)
+            a = Input(path_to_input_runbook, output_xlsx_file_name)
             a._readInput()
     except FileNotFoundError as exc:
         raise ValueError(
@@ -51,11 +52,14 @@ def main():
 
 
 def wrapper(fnc):
+    if setupConverter.setupDirectories():
+        print("Setup already completed, skipping folder creation.")
+    else:
+        print("Initial folder setup completed.")
     log = Converter.logger(__name__, debugLevel=logging.DEBUG)
     log.info("Started...")
     main()
     log.info("Done")
-
 
 if __name__ == "__main__":
     if os.path.exists(Converter.CI_LOGS_FILEPATH):

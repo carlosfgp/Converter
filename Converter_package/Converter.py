@@ -1,14 +1,15 @@
 import logging
+
 import os
 
 from configparser import ConfigParser
 
 
-class Converter():
+class Converter:
     parent_directory = os.path.dirname(__file__)
     home_directory = os.path.expanduser("~")
     ULDD_PATH_REQUEST_ID_PATH = "./catalog/catalognaNo"
-    CI_RUNBOOK_DESTINATION_PATH = os.path.join(home_directory,"Runbooks")
+    CI_RUNBOOK_DESTINATION_PATH = os.path.join(home_directory, "Runbooks")
     CI_LOGS_FILEPATH = os.path.join(parent_directory, "logs/converter.log")
     CI_TEST_DATA = os.path.join(parent_directory, "TEST_DATA")
     TEMP_XLSX_PATH = os.path.join(parent_directory, "tmp")
@@ -16,7 +17,7 @@ class Converter():
     FILE_SUFIX = "_CI.xlsx"
     CONFIG_LOCATION_AND_NAME = "config/ToscaToCIMapping.ini"
     RQ_IF = "config/RW_IF.ini"
-    POSSIBLE_HEADERS = ["ActionType", "__PosibleHeaders_Here"]
+    POSSIBLE_HEADERS = ["ActionType", "__PossibleHeaders_Here"]
     HEADER = "HEADER"
     CREATE_CONFIG = False
 
@@ -28,41 +29,41 @@ class Converter():
         self.__interfaceConfigData__ = ConfigParser()
         self.__interfaceConfigData__.read(Converter.RQ_IF)
 
-    def secctionExist(self, stepType):
+    def sectionExist(self, stepType):
         if stepType in self.getSecctions():
             return True
         return False
 
-    def getElementsFromSecction(self, section):
-        elementsFromSeccion = []
+    def getElementsFromSection(self, section):
+        elementsFromSection = []
         try:
-            if self.secctionExist(section):
+            if self.sectionExist(section):
                 for key, elements in self.__config__.items(section):
-                    elementsFromSeccion.append(elements)
+                    elementsFromSection.append(elements)
             else:
                 self.__log__.debug(f"Section: {section} not found on config file{Converter.CONFIG_LOCATION_AND_NAME}",
                                    exc_info=True)
-        except KeyError as exc:
+        except KeyError:
             raise self.__log__.debug(f"Section: {section} not found on config file{Converter.CONFIG_LOCATION_AND_NAME}",
                                      exc_info=True)
-        return elementsFromSeccion
+        return elementsFromSection
 
     def getSecctions(self):
         return self.__configSections__
 
-    def logger(moduleName, fileName=CI_LOGS_FILEPATH, formatter="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+    def logger(self, fileName=CI_LOGS_FILEPATH, formatter="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
                debugLevel=logging.DEBUG):
-        log = logging.getLogger(moduleName)
+        log = logging.getLogger(self)
         log.setLevel(debugLevel)
         formatter = logging.Formatter(formatter)
 
-        #Console log handler
+        # Console log handler
         console_handler = logging.StreamHandler()
         console_handler.setFormatter(formatter)
         console_handler.setFormatter(formatter)
         console_handler.setLevel(debugLevel)
 
-        #converter.log handler
+        # converter.log handler
         file_handler = logging.FileHandler(fileName)
         file_handler.setLevel(debugLevel)
         file_handler.setFormatter(formatter)

@@ -1,7 +1,6 @@
 import csv
 import logging
 import os
-import traceback
 
 import xlsxwriter.exceptions
 from Converter import Converter
@@ -10,15 +9,16 @@ from WriteNewXlsx import WriteNewXlsx
 from xlsxwriter.workbook import Workbook
 
 
-class input(Converter):
+class Input(Converter):
 
     def __init__(self, inputFile, runbookName):
+        super().__init__()
         self.__inputFile = inputFile
         self.__log__ = Converter.logger(__name__, debugLevel=logging.INFO)
         self.__runbookName__ = runbookName
         new_Stram_Handler = logging.StreamHandler()
         self.__log__.addHandler(new_Stram_Handler)
-        if (os.path.isfile(inputFile) & (inputFile).endswith(".csv")):
+        if os.path.isfile(inputFile) & inputFile.endswith(".csv"):
             message = f"Transforming Tosca *{inputFile}* Runbook into CI."
             self.__log__.info(message)
         else:
@@ -42,13 +42,13 @@ class input(Converter):
         try:
             with open(self.__inputFile, "rt", encoding="utf8") as f:
                 reader = csv.reader(f)
-                # Number of destiny row might not be the same as the origin, tracking it using linsWrote
+                # Number of destiny row might not be the same as the origin, tracking it using linesWrote
                 for walkingRowNumber, dataInRow in enumerate(reader):
                     self.__log__.debug(f"Origin - R - {walkingRowNumber}  ROW - {dataInRow}")
                     self.__log__.debug(f"Destiny - R - {linesWrote}  ROW - {dataInRow}")
 
                     newRowValuesLst = compute.compute(linesWrote, dataInRow)
-                    if False == newRowValuesLst:
+                    if not newRowValuesLst:
                         # Empty value is already handled on compute() method
                         continue
                     else:
@@ -64,5 +64,4 @@ class input(Converter):
         except TypeError as exc:
             self.__log__.warning(f"Error while reading input file {exc}", exc_info=True)
         except xlsxwriter.exceptions.FileCreateError as exc:
-            self.__log__.critical(f"Error:{traceback.print_exc()}")
-
+            self.__log__.critical(f"Error:{exc.args}")

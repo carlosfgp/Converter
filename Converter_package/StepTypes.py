@@ -33,7 +33,7 @@ class StepTypes():
         NEW_REQUEST_TYP = 4
         NEW_RT = 5
 
-        ciElements = self.__config__.getElementsFromSecction(sectionName)
+        ciElements = self.__config__.getElementsFromSection(sectionName)
         fileinfo = ReadXml()
         valuesFromXml = fileinfo.readXml(n_row, oldRowData[3])
         if False != valuesFromXml:
@@ -78,12 +78,12 @@ class StepTypes():
         return temp
 
     def findMethod(self, n_row, section, oldRowData):
-        if self.__config__.secctionExist(section):
+        if self.__config__.sectionExist(section):
             funcCall = getattr(self, section)
             return funcCall(n_row, section, oldRowData)
 
     def FolderDrop(self, n_row, sectionName, oldRowData):
-        elements = self.__config__.getElementsFromSecction(sectionName)
+        elements = self.__config__.getElementsFromSection(sectionName)
         # interfaceName = ReadXml.ReadXml(elements[3])
         # featureName =
         # feature = getFeatureBaseOnInterface(elements[3])

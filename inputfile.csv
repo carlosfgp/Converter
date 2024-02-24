@@ -1,0 +1,23 @@
+ActionType,Paraml, Param2,Param3,Paran4,Param5,Paran6
+LTE, IntradayDisclosures3,12/8/2022,0,564654,0,
+FileDrop,1.13.2,564654,/home/solrac/Projects/python/Converter/TestData/uldd.xml,1,0,1
+SKIPComment,#NAME?,,,,,
+DBQuiet,IDS_D_O,EVNT_OCRN_ WITH_CNTX,5,5,,
+FolderDrop,1.13.2,564654,/home/solrac/Projects/python/Converter/TestData/subFolder,1,0,1
+DBQuiet ,IDS_D_O,EVNT_OCRN WITH_CNTX,5,5,,
+FileDrop,1.13.2,564654,/home/solrac/Projects/python/Converter/TestData/kmkdf_uehre.xml,1,1,1
+DBQuLet,IDS_D_O,EVT_OCRN _WITH_CNTx,5,5,,
+LTE, IntradayDisclosures2,12/8/2022,0,564654,0,
+DBQuiet,IDS_D_O,EVNT_OCRN_WITH_CHTX,5,5,,
+LTE, IntredayDisclosuresPublication2,12/8/2022,0,564654,0,
+DBQuerY,DSCLCORE_D_O,DSCLCORE_D_O,select count(*) AS QUERYCOUNT from DSCLCORE_D_O. dscl_calc_trkg where calc_typ in (' 'INTRA DAY_MULTI_DSCL_FNM '|''INTRA_DAY_HULTI_DSCL_FRE''|''HY_REFRESH FNM' '| ' 'HV_REFRESH_FRE' ') and CALC_CI,,,
+DBQuiet,ID$_D_O,EVNT_OCRN_WITH_CHTX,5,5,,
+DBQuiet,IDS_D_O,EVWT_OCRN_WITH_CNIX,5,5,,
+LTE, IntradayDisclosures3,12/8/2022,0,564654,0,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,,,
+,,,,#NAME?,,
