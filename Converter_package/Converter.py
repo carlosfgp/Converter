@@ -60,7 +60,6 @@ class Converter:
         # Console log handler
         console_handler = logging.StreamHandler()
         console_handler.setFormatter(formatter)
-        console_handler.setFormatter(formatter)
         console_handler.setLevel(debugLevel)
 
         # converter.log handler

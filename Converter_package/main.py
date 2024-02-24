@@ -1,12 +1,12 @@
 #!/user/bin/python3
 import argparse
 import logging
-import os
+
 import sys
 
 import setupConverter
-from Converter import Converter
 from ReadinginputFile import Input
+from Converter import Converter
 
 
 def main():
@@ -18,7 +18,6 @@ def main():
         3. Make sure to call the main program with at least the input.csv file
     """
 
-    log = Converter.logger(__name__)
     parseinputargs = argparse.ArgumentParser(prog="CSV to Xlsx Converter\n",
                                              description="Application to convert csv into xlsx files")
 
@@ -33,7 +32,6 @@ def main():
                                 help="Default to N, only two possible values N/Y", default="N",
                                 choices=["N", "Y"])
     args = parseinputargs.parse_args()
-    log.info(f"Input parameters{str(sys.argv)}")
 
     try:
         if len(sys.argv) < 1:
@@ -62,7 +60,4 @@ def wrapper(fnc):
     log.info("Done")
 
 if __name__ == "__main__":
-    if os.path.exists(Converter.CI_LOGS_FILEPATH):
-        os.remove(Converter.CI_LOGS_FILEPATH)
-
     wrapper(main)

@@ -20,7 +20,8 @@ def generateIFConfig():
     }
     if not os.path.exists(os.path.join(os.path.dirname(__file__), "config")):
         os.makedirs(os.path.join(os.path.dirname(__file__), "config"))
-    with open(Converter.RQ_IF, "w") as f:
+
+    with open(os.path.join(os.path.dirname(__file__),"config/RW_IF.ini"), "w") as f:
         config.write(f)
 
 
