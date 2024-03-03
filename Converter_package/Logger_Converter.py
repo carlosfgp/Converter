@@ -14,11 +14,11 @@ class LoggerConverter:
             with open(log_file, "w") as f:
                 f.write("Initialization...\n")
         elif os.path.isfile(log_file):
-            # Restting log file
+            # Resting log file
             with open(log_file, "w") as f:
                 f.write("Initialization...")
 
-        log = logging.getLogger(self)
+        log = logging.getLogger(str(self))
         log.setLevel(debugLevel)
         formatter = logging.Formatter(formatter)
 

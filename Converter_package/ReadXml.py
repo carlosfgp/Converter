@@ -1,4 +1,3 @@
-
 import os
 import xml.etree.ElementTree as ET
 
@@ -23,31 +22,35 @@ class ReadXml:
             raise self.__log__.debug(
                 f'Sectio not found on config file{Converter.RQ_IF}',
                 exc_info=True)
-        self.__mapinggDic__ = mappingDic
+        self.__mappingDic__ = mappingDic
 
     def readXml(self, row, inputFile):
-        elementsToreturn = []
+        elementsToReturn = []
         if os.path.isfile(inputFile):
             tree = ET.parse(inputFile)
             root = tree.getroot()
-            neededElements = ['.catalogname' ,'.UpperCategory1/SubCategoryA/subCategoryName', '.UpperCategory1/SubCategoryA/SubCategoryB/subCategoryName','.book/description', 'catalognaNo' ]
+            neededElements = ['.catalogname', '.UpperCategory1/SubCategoryA/subCategoryName',
+                              '.UpperCategory1/SubCategoryA/SubCategoryB/subCategoryName', '.book/description',
+                              'catalognaNo']
             try:
+
                 for paths in neededElements:
                     element = root.find(paths).text
-                    if element !="" and element != None:
-                        elementsToreturn.append(element.strip(''))
+                    if element != "" and element is not None:
+                        elementsToReturn.append(element.strip(''))
 
-                self.__log__.info(f'Getting requestid for  file {inputFile} in row {row} return value: {elementsToreturn}')
-                return  elementsToreturn
-                #value =  tree.find(Converter.ULDD_PATH_REQUEST_ID_PATH)
-                #print(value)
+                self.__log__.info(
+                    f'Getting requestId for  file {inputFile} in row {row} return value: {elementsToReturn}')
+                return elementsToReturn
+                # value =  tree.find(Converter.ULDD_PATH_REQUEST_ID_PATH)
+                # print(value)
             except AttributeError as exc:
-                raise AttributeError(f"Error while getting data from input file {inputFile} in row {row}, either the data needs to be reviewed or the paths to the elemtns needs to be updated.")
+                raise AttributeError(
+                    f"Error while getting data from input file {inputFile} in row {row}, either the data needs to be "
+                    f"reviewed or the paths to the elements needs to be updated.")
 
         else:
-            self.__log__.critical(f"Error on row {row} file doesn\'t exist: {inputFile}.")
-        return  False
-        # if self.__mapinggDic__ = interfaceNo:
+            self.__log__.critical(f"Error on row {row} file does not exist: {inputFile}.")
+        return False
+        # if self.__mappingDic__ = interfaceNo:
         #     pass
-
-

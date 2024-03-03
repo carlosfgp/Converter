@@ -10,7 +10,7 @@ from xlsxwriter.workbook import Workbook
 from Logger_Converter import LoggerConverter
 
 
-class Input():
+class Input:
 
     def __init__(self, inputFile, runbookName):
         self.__inputFile = inputFile

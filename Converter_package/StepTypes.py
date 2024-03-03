@@ -11,6 +11,7 @@ class StepTypes:
 
     def FileDrop(self, n_row, sectionName, oldRowData):
         # OD = OLD_DATA
+        global newRowValues
         OD_FILE_DROP = 0
         OD_INTERFACE_NO = 1
         OD_ISSUER_ID = 2
@@ -29,7 +30,7 @@ class StepTypes:
         ciElements = self.__config__.getElementsFromSection(sectionName)
         fileinfo = ReadXml()
         valuesFromXml = fileinfo.readXml(n_row, oldRowData[3])
-        if False != valuesFromXml:
+        if valuesFromXml:
             newRowValues = []
 
             interfaceNo = self.getInterfaceValue(valuesFromXml[NEW_REQUEST_TYP])
@@ -61,7 +62,7 @@ class StepTypes:
         try:
             if self.__config__.__interfaceConfigData__['INTERFACEDATA'][interfaceName] != "":
                 return self.__config__.__interfaceConfigData__['INTERFACEDATA'][interfaceName]
-        except:
+        except Exception as e:
             self.__log__.warning(
                 f'Element{interfaceName} not found on config file{Converter.RQ_IF} interfaces value will be empty')
         return 'NotFound'

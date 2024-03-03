@@ -29,7 +29,7 @@ class Converter:
         self.__interfaceConfigData__.read(Converter.RQ_IF)
 
     def sectionExist(self, stepType):
-        if stepType in self.getSecctions():
+        if stepType in self.getSections():
             return True
         return False
 
@@ -41,13 +41,11 @@ class Converter:
                     elementsFromSection.append(elements)
             else:
                 self.__log__.debug(f"Section: {section} not found on config file{Converter.CONFIG_LOCATION_AND_NAME}",
-                                   exc_info=True)
+                                   exc_info=True, stack_info=True)
         except KeyError:
-            raise self.__log__.debug(f"Section: {section} not found on config file{Converter.CONFIG_LOCATION_AND_NAME}",
-                                     exc_info=True)
+            self.__log__.error(f"Section: {section} not found on config file{Converter.CONFIG_LOCATION_AND_NAME}",
+                               exc_info=True, stack_info=True)
         return elementsFromSection
 
-    def getSecctions(self):
+    def getSections(self):
         return self.__configSections__
-
-
