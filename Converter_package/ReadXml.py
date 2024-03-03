@@ -1,16 +1,16 @@
-import logging
+
 import os
-import traceback
-from configparser import ConfigParser
 import xml.etree.ElementTree as ET
 
+from Logger_Converter import LoggerConverter
+from configparser import ConfigParser
 from Converter import Converter
 
 
 class ReadXml:
 
     def __init__(self):
-        self.__log__ = Converter.logger(__name__, debugLevel=logging.DEBUG)
+        self.__log__ = LoggerConverter.logger(__name__)
         self.__mapping__ = ConfigParser()
         self.__loadMapping__ = self.__mapping__.read(Converter.RQ_IF)
         self.__mapping__.sections()

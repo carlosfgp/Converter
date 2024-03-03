@@ -1,7 +1,10 @@
 import os.path
-from configparser import ConfigParser
 
 from Converter import Converter
+from configparser import ConfigParser
+from Logger_Converter import LoggerConverter
+
+log = LoggerConverter.logger(__name__)
 
 
 def generateIFConfig():
@@ -18,11 +21,10 @@ def generateIFConfig():
         "column6": "Param 1 Value",
         "column7": "Param 1 Value",
     }
-    if not os.path.exists(os.path.join(os.path.dirname(__file__), "config")):
-        os.makedirs(os.path.join(os.path.dirname(__file__), "config"))
 
-    with open(os.path.join(os.path.dirname(__file__),"config/RW_IF.ini"), "w") as f:
+    file = os.path.join(os.path.dirname(__file__), Converter.RQ_IF)
+
+    with open(file, "w") as f:
         config.write(f)
 
-
-generateIFConfig()
+    log.info(f"Configuration file created: {file}")

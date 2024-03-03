@@ -1,12 +1,14 @@
 #!/user/bin/python3
 import argparse
 import logging
-
+import SetupConverter
+import key_feaature_config_creator
+import requestName_interfaceNumbe_config_creator
 import sys
 
-import setupConverter
+from Logger_Converter import LoggerConverter
+
 from ReadinginputFile import Input
-from Converter import Converter
 
 
 def main():
@@ -35,29 +37,29 @@ def main():
 
     try:
         if len(sys.argv) < 1:
-            raise ValueError(f"Missing input file, Syntax's: ./caller.py )")
+            raise ValueError(f"Missing input file, Syntax's: ./main.py )")
         else:
 
             path_to_input_runbook = args.path_to_input_runbook
             output_xlsx_file_name = args.output_xlsx_file_name
             is_data_being_copied_over_ci = args.is_data_being_copied_over_ci
-            print(str(sys.argv))
+
+            SetupConverter.setup_file_directory()
+            key_feaature_config_creator.generateKeyFeatureConfig()
+            requestName_interfaceNumbe_config_creator.generateIFConfig()
             a = Input(path_to_input_runbook, output_xlsx_file_name)
-            a._readInput()
+            a.readInput()
+
     except FileNotFoundError as exc:
-        raise ValueError(
-            f"Missing input file for more info please do ./main --help),{exc}")
+        raise f"Missing input file for more info please do ./main --help),{exc}"
 
 
 def wrapper(fnc):
-    if setupConverter.setupDirectories():
-        print("Setup already completed, skipping folder creation.")
-    else:
-        print("Initial folder setup completed.")
-    log = Converter.logger(__name__, debugLevel=logging.DEBUG)
-    log.info("Started...")
+    log = LoggerConverter.logger(__name__)
+    log.log(logging.INFO, "Started")
     main()
-    log.info("Done")
+    log.log(logging.INFO, "Done")
+
 
 if __name__ == "__main__":
     wrapper(main)

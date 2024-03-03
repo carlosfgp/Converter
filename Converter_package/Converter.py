@@ -1,8 +1,8 @@
 import logging
-
 import os
 
 from configparser import ConfigParser
+from Logger_Converter import LoggerConverter
 
 
 class Converter:
@@ -10,7 +10,6 @@ class Converter:
     home_directory = os.path.expanduser("~")
     ULDD_PATH_REQUEST_ID_PATH = "./catalog/catalognaNo"
     CI_RUNBOOK_DESTINATION_PATH = os.path.join(home_directory, "Runbooks")
-    CI_LOGS_FILEPATH = os.path.join(parent_directory, "logs/converter.log")
     CI_TEST_DATA = os.path.join(parent_directory, "TEST_DATA")
     TEMP_XLSX_PATH = os.path.join(parent_directory, "tmp")
     TEMP_XLSX_FILE = "temp.xlsx"
@@ -25,7 +24,7 @@ class Converter:
         self.__config__ = ConfigParser()
         self.__config__.read(Converter.CONFIG_LOCATION_AND_NAME)
         self.__configSections__ = self.__config__.sections()
-        self.__log__ = Converter.logger(__name__, debugLevel=logging.DEBUG)
+        self.__log__ = LoggerConverter.logger(__name__)
         self.__interfaceConfigData__ = ConfigParser()
         self.__interfaceConfigData__.read(Converter.RQ_IF)
 
@@ -51,22 +50,4 @@ class Converter:
     def getSecctions(self):
         return self.__configSections__
 
-    def logger(self, fileName=CI_LOGS_FILEPATH, formatter="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
-               debugLevel=logging.DEBUG):
-        log = logging.getLogger(self)
-        log.setLevel(debugLevel)
-        formatter = logging.Formatter(formatter)
 
-        # Console log handler
-        console_handler = logging.StreamHandler()
-        console_handler.setFormatter(formatter)
-        console_handler.setLevel(debugLevel)
-
-        # converter.log handler
-        file_handler = logging.FileHandler(fileName)
-        file_handler.setLevel(debugLevel)
-        file_handler.setFormatter(formatter)
-
-        log.addHandler(file_handler)
-        log.addHandler(console_handler)
-        return log

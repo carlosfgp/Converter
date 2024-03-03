@@ -2,17 +2,18 @@ import logging
 import os
 import shutil
 
+from Logger_Converter import LoggerConverter
 from Converter import Converter
 
 
 class WriteNewXlsx:
 
     def __init__(self):
-        self.__log__ = Converter.logger(__name__, debugLevel=logging.INFO)
+        self.__log__ = LoggerConverter.logger(__name__)
 
     def moveFilesAround(self, actualFile):
         dstnFile = os.path.join(Converter.CI_RUNBOOK_DESTINATION_PATH,
-                                os.path.basename(actualFile).replace(".xlsx", Converter.FILE_SUFIX))
+                                str(os.path.basename(actualFile)).replace(".xlsx", Converter.FILE_SUFIX))
         if os.path.isfile(actualFile):
             shutil.copy(actualFile, dstnFile)
             self.__log__.info(f"File created *{dstnFile}*")

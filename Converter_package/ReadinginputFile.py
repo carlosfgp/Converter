@@ -7,25 +7,24 @@ from Converter import Converter
 from Transformer import Transformer
 from WriteNewXlsx import WriteNewXlsx
 from xlsxwriter.workbook import Workbook
+from Logger_Converter import LoggerConverter
 
 
-class Input(Converter):
+class Input():
 
     def __init__(self, inputFile, runbookName):
-        super().__init__()
         self.__inputFile = inputFile
-        self.__log__ = Converter.logger(__name__, debugLevel=logging.INFO)
+        self.__logLevel__ = logging.INFO
+        self.__log__ = LoggerConverter.logger(__name__)
         self.__runbookName__ = runbookName
-        new_Stram_Handler = logging.StreamHandler()
-        self.__log__.addHandler(new_Stram_Handler)
         if os.path.isfile(inputFile) & inputFile.endswith(".csv"):
             message = f"Transforming Tosca *{inputFile}* Runbook into CI."
-            self.__log__.info(message)
+            self.__log__.log(self.__logLevel__, message)
         else:
             raise FileNotFoundError(f"Error while reading input file: *{inputFile}*")
 
     # Reads csv file and writes new xlsx at the same time
-    def _readInput(self):
+    def readInput(self):
         compute = Transformer()
         linesWrote = 0  # Row counter for new file
         moveFiles = WriteNewXlsx()

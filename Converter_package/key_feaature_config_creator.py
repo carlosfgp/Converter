@@ -1,7 +1,9 @@
 import os.path
+from Converter import Converter
 from configparser import ConfigParser
+from Logger_Converter import LoggerConverter
 
-
+log = LoggerConverter.logger(__name__)
 def generateKeyFeatureConfig():
     config = ConfigParser()
     config.optionxform = str
@@ -59,11 +61,7 @@ def generateKeyFeatureConfig():
         "354684": "FNMA"
     }
 
-    if not os.path.exists(os.path.join(os.path.dirname(__file__), "config")):
-        os.makedirs(os.path.join(os.path.dirname(__file__), "config"))
-
-    with open(os.path.join(os.path.dirname(__file__), "config/ToscaToCIMapping.ini"), "w") as f:
+    with open(Converter.CONFIG_LOCATION_AND_NAME, "w") as f:
         config.write(f)
 
-
-generateKeyFeatureConfig()
+    log.info(f"Config file created: {Converter.CONFIG_LOCATION_AND_NAME}")

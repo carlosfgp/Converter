@@ -1,20 +1,13 @@
-import logging
 
+from Logger_Converter import LoggerConverter
 from Converter import Converter
 from ReadXml import ReadXml
 
 
-class StepTypes():
+class StepTypes:
     def __init__(self):
-        self.__log__ = Converter.logger(__name__, debugLevel=logging.INFO)
+        self.__log__ = LoggerConverter.logger(__name__)
         self.__config__ = Converter()
-
-    def getHeader(self):
-        headerValues = []
-
-        for column, value in self.__parser__.items('HEADER'):
-            headerValues.append(value)
-        return headerValues
 
     def FileDrop(self, n_row, sectionName, oldRowData):
         # OD = OLD_DATA
