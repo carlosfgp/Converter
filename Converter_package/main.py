@@ -11,6 +11,9 @@ from Logger_Converter import LoggerConverter
 from ReadinginputFile import Input
 
 
+logger = LoggerConverter.logger(__name__)
+
+
 def main():
     """
     Main use is to convert csv files into xlsx with custom output base on mapping source -> dictionary - >destiny
@@ -51,14 +54,13 @@ def main():
             a.readInput()
 
     except FileNotFoundError as exc:
-        raise f"Missing input file for more info please do ./main --help),{exc}"
+        logger.error(logging.INFO, f"Missing input file for more info please do ./main --help),{exc}", stack_info=True)
 
 
 def wrapper(fnc):
-    log = LoggerConverter.logger(__name__)
-    log.log(logging.INFO, "Started")
+    logger.log(logging.INFO, "Started")
     main()
-    log.log(logging.INFO, "Done")
+    logger.log(logging.INFO, "Done")
 
 
 if __name__ == "__main__":

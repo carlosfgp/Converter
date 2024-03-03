@@ -17,11 +17,14 @@ class Input():
         self.__logLevel__ = logging.INFO
         self.__log__ = LoggerConverter.logger(__name__)
         self.__runbookName__ = runbookName
-        if os.path.isfile(inputFile) & inputFile.endswith(".csv"):
-            message = f"Transforming Tosca *{inputFile}* Runbook into CI."
-            self.__log__.log(self.__logLevel__, message)
-        else:
-            raise FileNotFoundError(f"Error while reading input file: *{inputFile}*")
+        try:
+            if os.path.isfile(inputFile) & inputFile.endswith(".csv"):
+                message = f"Transforming Tosca *{inputFile}* Runbook into CI."
+                self.__log__.log(self.__logLevel__, message)
+        except FileNotFoundError as e:
+            self.__log__.exception(f"Error while reading input file: *{inputFile}* b\nException:{e}")
+        except Exception as e:
+            self.__log__.exception(f"Exception:{e}")
 
     # Reads csv file and writes new xlsx at the same time
     def readInput(self):
