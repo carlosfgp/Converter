@@ -20,7 +20,7 @@ class ReadXml:
                 mappingDic[key] = elements
         except KeyError as exc:
             raise self.__log__.debug(
-                f'Sectio not found on config file{Converter.RQ_IF}',
+                f'Section not found on config file{Converter.RQ_IF}',
                 exc_info=True)
         self.__mappingDic__ = mappingDic
 

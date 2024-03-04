@@ -14,8 +14,8 @@ class Converter:
     TEMP_XLSX_PATH = os.path.join(parent_directory, "tmp")
     TEMP_XLSX_FILE = "temp.xlsx"
     FILE_SUFIX = "_CI.xlsx"
-    CONFIG_LOCATION_AND_NAME = "config/ToscaToCIMapping.ini"
-    RQ_IF = "config/RW_IF.ini"
+    CONFIG_LOCATION_AND_NAME = os.path.join(parent_directory, "config/ToscaToCIMapping.ini")
+    RQ_IF = os.path.join(parent_directory, "config/RW_IF.ini")
     POSSIBLE_HEADERS = ["ActionType", "__PossibleHeaders_Here"]
     HEADER = "HEADER"
     CREATE_CONFIG = False

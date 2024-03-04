@@ -20,6 +20,6 @@ class Transformer():
         elif configInfo.sectionExist(oldKeyCell):
             return stepType.findMethod(n_row, oldKeyCell, oldRowData)
         else:
-            self.__log__.debug(
+            self.__log__.info(
                 f"Skipping like... Key: *{oldKeyCell}* not found on config file: *{Converter.CONFIG_LOCATION_AND_NAME}*")
             return False

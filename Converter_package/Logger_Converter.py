@@ -4,8 +4,10 @@ import os
 
 class LoggerConverter:
 
+    # Change debug level  debugLevel=logging.XXX
+
     def logger(self, formatter="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
-               debugLevel=logging.DEBUG):
+               debugLevel=logging.INFO):
 
         dirName = os.path.join(os.path.dirname(__file__), "logs")
         log_file = os.path.join(dirName, "converter.log")
